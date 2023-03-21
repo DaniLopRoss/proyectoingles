@@ -1,0 +1,26 @@
+<div id="<%= dom_id documento %>">
+<p>
+<strong>Numerocontrol:</strong>
+<%= documento.id %>
+</p>
+<p>
+<strong>Numerocontrol:</strong>
+<%= documento.numero_de_control %>
+</p>
+
+<p>
+<strong>Nombre:</strong>
+<%= documento.nombre %>
+</p>
+<p>
+<strong>Nombre del archivo:</strong>
+<% @documento.uploads.each do |adjunto| %>
+<p><%= adjunto.filename.to_s %></p>
+
+<% end %>
+<p>
+<strong>Estatus:</strong>
+<%= documento.status %>
+</p>
+
+</div>

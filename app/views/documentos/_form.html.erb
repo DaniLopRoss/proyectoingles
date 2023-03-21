@@ -1,0 +1,56 @@
+<head>
+<%= stylesheet_link_tag "style copy " %>
+</head>
+
+<%= form_with(model: documento) do |form| %>
+  <% if documento.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(documento.errors.count, "error") %> prohibited this documento from being saved:</h2>
+
+      <ul>
+        <% documento.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+   <div class="form-group row">
+    <%= form.label :header_image,"Cargar imagen", class:'col-sm-2' %>
+    <div class="col-sm-4">
+    <%= form.file_field :header_image , class: "form-control"%>
+   </div>
+   </div>
+
+  <div class="form-group row">
+    <%= form.label :uploads,"Subir documento" ,class:'col-sm-2'%>
+    <div class="col-sm-4">
+    <%= form.file_field :uploads, multiple: true, class: "form-control" %>
+  </div>
+  </div>
+
+  <div class="form-group row"> 
+    <%= form.label :numerocontrol,"Número de control",class:'col-sm-2' %>
+    <div class="col-sm-4">
+    <%= form.number_field :numerocontrol, class: "form-control" %>
+  </div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.label :nombre,"Nombre", class:'col-sm-2'%>
+    <div class="col-sm-4">
+    <%= form.text_field :nombre , class: "form-control"%>
+  </div>
+  </div>
+   <div class="form-group row">
+    <%= form.label :estatus,"Estatus", class:'col-sm-2'%>
+    <div class="col-sm-4">
+    <%= form.select :estatus, ["PAGADO", "PENDIENTE"], prompt: "Seleccione el estado" %>
+  </div>
+  </div>
+
+ 
+    <button class="btn btn-info" <%= form.submit %> Guardar </button>
+  </div>
+<% end %>
