@@ -1,0 +1,20 @@
+<div id="<%= dom_id certificate %>">
+<p>
+    <strong>Nombre:</strong>
+    <%= certificate.nombre %>
+  </p>
+
+  <p>
+   
+   <strong>Nombre del archivo:</strong>
+
+     <% @certificate.uploads.each do |upload| %>
+ <p><%= upload.blob.filename %></p>
+     <%end%> 
+ <p>
+<p>
+    <strong>Identificado de la constancia:</strong>
+    <%= certificate.payment_id%>
+    
+
+</div>

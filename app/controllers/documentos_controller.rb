@@ -16,15 +16,15 @@ class DocumentosController < ApplicationController
 
   # GET /documentos/1 or /documentos/1.json
   def show
-    
+    @documento = Documento.find(params[:id])
   end
 
-  def download_pdf
-    @documento = Documento.find(params[:id])
-    send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type: 'application/pdf', disposition: 'attachment'
-    #send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type:  'application/pdf'
+  # def download_pdf
+  #   @documento = Documento.find(params[:id])
+  #   send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type: 'application/pdf', disposition: 'attachment'
+  #   #send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type:  'application/pdf'
     
-  end
+  # end
 
 
 
@@ -32,6 +32,8 @@ class DocumentosController < ApplicationController
   # GET /documentos/new
   def new
     @documento = Documento.new
+    
+   
   end
 
   # GET /documentos/1/edit
@@ -53,6 +55,7 @@ class DocumentosController < ApplicationController
         # Obtenemos el objeto ActiveStorage::Blob asociado al archivo subido
         blob = @documento.uploads.first.blob
         md5 = blob.checksum
+        referencia=blob.filename
         updated_at = File.mtime(blob.service.path_for(blob.key)).strftime('%Y-%m-%d %H:%M:%S %z')
         created_at = File.mtime(blob.service.path_for(blob.key)).strftime('%Y-%m-%d %H:%M:%S')
         # Se asume que el archivo subido se ha adjuntado a un objeto ActiveStorage::Blob y se ha recuperado en la variable 'blob'
@@ -194,6 +197,7 @@ class DocumentosController < ApplicationController
         @documento.fecha = fecha
         @documento.md5 = md5
         @documento.cadena_comprobacion = cadena_comprobacion
+        @documento.referencia =referencia
   
         # Guardar los cambios en la base de datos
         @documento.save
@@ -206,7 +210,7 @@ File.open(Rails.root.join('public', 'uploads', "#{nombre}.xml"), "w") do |file|
  file.close
 
 end
-checksum_actual = Digest::MD5.file(Rails.root.join('public', 'uploads', "#{nombre}.xml")).hexdigest
+checksum_actual = blob.checksum
 if checksum_actual == md5
   puts checksum_actual
   puts "El archivo XML ha sido guardado correctamente y su checksum es igual al valor en la base de datos."
@@ -252,11 +256,13 @@ end
     # Use callbacks to share common setup or constraints between actions.
     def set_documento
       @documento = Documento.find(params[:id])
+      @documento_id= @documento.id
+   
     end
 
     # Only allow a list of trusted parameters through.
     def documento_params
-      params.require(:documento).permit(:user_id,:pdf_path, uploads: [])
+      params.require(:documento).permit(:user_id,:referencia, uploads: [])
     end
 
 
@@ -268,6 +274,14 @@ end
     #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
     # end
     
+
+    # def new_documento_anexo
+    #   @documento = Documento.find(params[:id])
+    #   @referencium = Referencium.new
+    # end
+    
+
+
 
 
 
@@ -305,18 +319,7 @@ end
 
 
 
-    def view_pdf
-      # Busca el documento correspondiente al código de barras
-      @documento = Documento.find_by(serial: params[:serial])
-      # Redirige al usuario a la vista que muestra el PDF si se encontró el documento
-      if @documento.present?
-        redirect_to rails_blob_path(@documento.archivo, disposition: 'inline')
-      else
-        # Si no se encontró el documento, muestra un mensaje de error
-        flash[:error] = 'El documento no fue encontrado'
-        redirect_to documentos_path
-      end
-    end
+    
   
     
 end

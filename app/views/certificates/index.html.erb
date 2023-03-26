@@ -1,13 +1,10 @@
-<head>
-<%= stylesheet_link_tag "style copy" %>
-</head>
 <div align="center">
 <p style="color: green"><%= notice %></p>
 <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">Documentos</a></li>
-          <li class="breadcrumb-item active">Listar documentos</li>
+          <li class="breadcrumb-item"><a href="">Firmadas</a></li>
+          <li class="breadcrumb-item active">Listar firmadas</li>
         </ol>
-<h4>Documentos</h4>
+<h4>Firmadas</h4>
 
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -25,40 +22,41 @@
                   <th></th>
                   <th scope="col">ID</th>
                   <th>Nombre</th>
-                  <th>Numero de control</th>
-                  <th>uploads</th>
+                  <th>Firmadas</th>
+                  <th>Comprobante</th>
                   <th>Acciones</th>
-                   </tr>
+                  </tr>
               </thead>
 
-              <% @documentos.each do |documento|%>
-              
-                <tr>
+              <% @certificates.each do |certificate|%>
+ <tr>
                     <td></td>
-                    <td><%= documento.id %></td>
-                    <td><%= documento.nombre %></td>
-                    <td><%= documento.numero_de_control  %></td>
-                    <td><% documento.uploads.each do |adjunto| %>
+                    <td><%= certificate.id %></td>
+                    <td><%= certificate.nombre  %></td>
+                    <td>
+                    <% certificate.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
                           <p><%= link_to 'Descargar', rails_blob_path(adjunto.blob, disposition: 'attachment') %></p>
-                        <% end %></td>
+                        <% end %>
+                    </td>
+
+                    
+                          <td>
+                          <% certificate.payment.uploads.each do |pay| %>
+                            <p><%= pay.filename.to_s %></p>
+                            <p><%= link_to 'Descargar', rails_blob_path(pay.blob, disposition: 'attachment') %></p>
+                          <% end %>
+                          
+                          </td>
+                          
+                         
                     <td>
-                    
-                    
-                    <a href="<%= edit_documento_path(documento)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
-                    <a  class="mostrar"  <%= link_to ({:action => :show, :id => documento.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
-                      <% if current_user.role != 'ingles' %>
-                      <%= link_to 'Agregar Pago', new_payment_path(documento_id: documento.id) %>
-                      <%end%>
-                      
-                    
-             
-
-
-
-                     </a>
-                     </td>
-                  </tr > 
+                    <a  class="mostrar"  <%= link_to ({:action => :show, :id => certificate.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
+                        <a href="<%= edit_certificate_path(certificate)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
+                        
+                        <%= link_to 'Documento firmado', new_certificate_path(certificate_id: certificate.id) %>
+                    </td>
+                     </tr > 
 <%end %>
 <script>
 $(document).ready(function() {
@@ -107,4 +105,3 @@ $(document).ready(function() {
 
                 
             </script>
-                  

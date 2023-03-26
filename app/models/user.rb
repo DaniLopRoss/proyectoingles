@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
          has_many :documentos
          has_one_attached :avatar
+         has_many :anexos
 
 end

@@ -1,11 +1,22 @@
-<p style="color: green"><%= notice %></p>
-
+<div class="container">
+<div class="card mt-5">
+<div class="card-header">
+<ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Documento</a></li>
+          <li class="breadcrumb-item active">Editar documento</li>
+        </ol>
+        
+<h4 class="text">Editar documento </h4>
+</div>
+ <div class="probar">
 <%= render @documento %>
 
 <div>
-  <%= link_to "Edit this documento", edit_documento_path(@documento) %> |
-  <%= link_to "Back to documentos", documentos_path %>
-  <a href="<%= @pdf_url %>" target="_blank">Ver PDF</a>
 
-  <%= button_to "Destroy this documento", @documento, method: :delete %>
+  <%= link_to "Editar documento", edit_documento_path(@documento) %> 
+  
+   <%= link_to "Regresar documentos", documentos_path %>
+  
+
+  <%= button_to "Eliminar documento", @documento, method: :delete %>
 </div>

@@ -1,0 +1,39 @@
+<%= form_with(model: certificate) do |form| %>
+  <% if certificate.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(certificate.errors.count, "error") %> prohibited this certificate from being saved:</h2>
+
+      <ul>
+        <% certificate.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group row"> 
+  <%= form.label :payment_id,"Número de control",class:'col-sm-2' %>
+  <div class="col-sm-4">
+ <%= form.hidden_field :payment_id, value: @payment.id %>
+</div>
+</div>
+
+
+<div class="form-group row">
+  <%= form.label :uploads,"Subir documento" ,class:'col-sm-2'%>
+  <div class="col-sm-4">
+  <%= form.file_field :uploads, multiple: true, class: "form-control" %>
+</div>
+</div>
+
+<div class="form-group row"> 
+  <%= form.label :nombre,"Número de control",class:'col-sm-2' %>
+  <div class="col-sm-4">
+  <%= form.text_field :nombre, class: "form-control" %>
+</div>
+</div>
+
+
+
+  <button class="btn btn-info" <%= form.submit %> Guardar </button>
+
+<% end %>

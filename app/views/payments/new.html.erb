@@ -1,0 +1,19 @@
+<div class="container">
+<div class="card mt-5">
+<div class="card-header">
+<ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Registro de pagos</a></li>
+          <li class="breadcrumb-item active">Registrar nuevo pago</li>
+        </ol>
+        
+<h4 class="text">Nuevo pago </h4>
+</div>
+ <div class="probar">
+
+<%= render "form", payment: @payment %>
+
+<br>
+
+<div>
+  <%= link_to "Back to payments", payments_path %>
+</div>

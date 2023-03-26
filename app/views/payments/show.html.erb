@@ -1,0 +1,20 @@
+<div class="container">
+<div class="card mt-5">
+<div class="card-header">
+<ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Pago</a></li>
+          <li class="breadcrumb-item active">Pago registrado documento</li>
+        </ol>
+        
+<h4 class="text">Pago registrado documento </h4>
+</div>
+ <div class="probar">
+
+<%= render @payment %>
+
+<div>
+  <%= link_to "Editar pago", edit_payment_path(@payment) %> |
+  <%= link_to "Lista de pagos", payments_path %>
+
+  <%= button_to "Eliminar pago", @payment, method: :delete %>
+</div>
