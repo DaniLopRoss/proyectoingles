@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%= stylesheet_link_tag "style2" %>
     <meta name="robots" content="noindex">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
@@ -10,9 +11,7 @@
     <meta name="csrf-token" content="azyrMQPFEonQJUJcI0FZ2xfSjLKXqq90Ar18DLtd">
     <title>Sistema Verificación</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://assets.mindbox.app/css/legacy-app.css?id=2ecdd2ab0a71021f849b">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    
+   
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-150206594-2"></script>
     
 </head>
@@ -33,6 +32,7 @@
          </ul> 
          
           <br>
+          <nav-pills-2 nav-center">
           <h3>Inicio de Sesión</h3>
           <%= form_for(resource, as: resource_name, url: session_path(resource_name), html_options: {class: "usuario"}) do |f| %>
             <%= render "devise/shared/error_messages", resource: resource %>
