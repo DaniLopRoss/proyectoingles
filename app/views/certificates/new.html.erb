@@ -1,9 +1,19 @@
-<h1>New certificate</h1>
+<div class="container">
+<div class="card mt-5">
+<div class="card-header">
+<ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Registro de firmas</a></li>
+          <li class="breadcrumb-item active">Registrar nuevo documento firmado</li>
+        </ol>
+        
+<h4 class="text">Nueva firma </h4>
+</div>
+ <div class="probar">
 
 <%= render "form", certificate: @certificate %>
 
 <br>
 
 <div>
-  <%= link_to "Back to certificates", certificates_path %>
+  <%= link_to "Back to payments", certificates_path %>
 </div>

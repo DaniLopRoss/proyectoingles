@@ -10,7 +10,7 @@ class CertificatesController < ApplicationController
   def show
   end
 
-  # GET /payments/new
+  # GET /certificates/new
   def new
     @certificate = Certificate.new
     @payment = Payment.find(params[:payment_id])
@@ -26,31 +26,21 @@ class CertificatesController < ApplicationController
     @certificate = Certificate.new(certificate_params)
     @certificate.payment_id = params[:certificate][:payment_id]
 
+    logger.debug("Payment ID: #{params[:certificate][:payment_id]}")
 
     if @certificate.save
-      redirect_to certificate_path(@certificate), notice: "El pago ha sido agregado con éxito."
-      #redirect_to document_path(@payment.documento), notice: "El pago ha sido agregado con éxito."
-    else
+      redirect_to certificate_path(@certificate), notice: "La firma ha sido agregado con éxito."
+      else
       render :new
     end
-
-    # respond_to do |format|
-    #   if @payment.save
-    #     format.html { redirect_to payment_url(@payment), notice: "Payment was successfully created." }
-    #     format.json { render :show, status: :created, location: @payment }
-    #   else
-    #     format.html { render :new, status: :unprocessable_entity }
-    #     format.json { render json: @payment.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   # PATCH/PUT /payments/1 or /payments/1.json
   def update
     respond_to do |format|
       if @certificate.update(certificate_params)
-        format.html { redirect_to certificate_url(@certificate), notice: "Certificate was successfully updated." }
-        format.json { render :show, status: :ok, location: @certificate}
+        format.html { redirect_to certificate_url(@certificate), notice: "Certtificate was successfully updated." }
+        format.json { render :show, status: :ok, location: @certificate }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @certificate.errors, status: :unprocessable_entity }
@@ -63,7 +53,7 @@ class CertificatesController < ApplicationController
     @certificate.destroy
 
     respond_to do |format|
-      format.html { redirect_to certificate_url, notice: "Certificate was successfully destroyed." }
+      format.html { redirect_to payments_url, notice: "Certificate was successfully destroyed." }
       format.json { head :no_content }
     end
   end

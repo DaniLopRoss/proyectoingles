@@ -1,10 +1,20 @@
-<p style="color: green"><%= notice %></p>
+<div class="container">
+<div class="card mt-5">
+<div class="card-header">
+<ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="">Firma</a></li>
+          <li class="breadcrumb-item active">Firma registrado documento</li>
+        </ol>
+        
+<h4 class="text">Frirma registrado documento </h4>
+</div>
+ <div class="probar">
 
 <%= render @certificate %>
 
 <div>
-  <%= link_to "Edit this certificate", edit_certificate_path(@certificate) %> |
-  <%= link_to "Back to certificates", certificates_path %>
+  <%= link_to "Editar pago", edit_certificate_path(@certificate) %> |
+  <%= link_to "Lista de pagos", certificates_path %>
 
-  <%= button_to "Destroy this certificate", @certificate, method: :delete %>
+  <%= button_to "Eliminar pago", @certificate, method: :delete %>
 </div>

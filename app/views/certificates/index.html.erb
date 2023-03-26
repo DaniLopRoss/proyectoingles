@@ -53,8 +53,9 @@
                     <td>
                     <a  class="mostrar"  <%= link_to ({:action => :show, :id => certificate.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
                         <a href="<%= edit_certificate_path(certificate)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
-                        
+                        <% if current_user.role != 'servicios' %>
                         <%= link_to 'Documento firmado', new_certificate_path(certificate_id: certificate.id) %>
+                        <%end%>
                     </td>
                      </tr > 
 <%end %>
