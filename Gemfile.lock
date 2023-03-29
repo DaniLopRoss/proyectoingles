@@ -314,6 +314,7 @@ DEPENDENCIES
   jquery-datatables (~> 1.10)
   jquery-datatables-rails
   jquery-rails
+  minitest
   momentjs-rails
   mysql2
   nokogiri

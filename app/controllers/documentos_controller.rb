@@ -11,7 +11,15 @@ class DocumentosController < ApplicationController
 
   # GET /documentos or /documentos.json
   def index
-    @documentos = Documento.all
+    if current_user.role == "financieros" || current_user.role == "dirección"
+      @documentos = Documento.sin_pago
+    elsif current_user.role == "ingles"
+      @documentos = Documento.all
+    else
+      # Si el usuario no tiene un rol válido, se muestra una lista vacía
+      @documentos = []
+    end
+    
   end
 
   # GET /documentos/1 or /documentos/1.json

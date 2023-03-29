@@ -2,8 +2,8 @@
 
 <%= form_with(model: documento) do |form| %>
   <% if documento.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(documento.errors.count, "error") %> prohibited this documento from being saved:</h2>
+    <div style="color: blue">
+      
 
       <ul>
         <% documento.errors.each do |error| %>

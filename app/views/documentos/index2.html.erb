@@ -1,10 +1,13 @@
+<head>
+<%= stylesheet_link_tag "style copy" %>
+</head>
 <div align="center">
 <p style="color: green"><%= notice %></p>
 <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">Pagadas</a></li>
-          <li class="breadcrumb-item active">Listar pagadas</li>
+          <li class="breadcrumb-item"><a href="">Documentos</a></li>
+          <li class="breadcrumb-item active">Listar documentos</li>
         </ol>
-<h4>Pagadas</h4>
+<h4>Documentos</h4>
 
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -20,56 +23,41 @@
                     
                   <tr>
                   <th></th>
-                  <th scope="col">No.Control</th>
+                  <th scope="col">ID</th>
                   <th>Nombre</th>
-                  <th>Comprobante de pago</th>
-                  <th>Estatus</th>
-                  
-                  <% unless current_user.role == "financieros" %>
-                  <th>Constancia  </th>
-                  <% end %>
-                  
+                  <th>Numero de control</th>
+                  <th>uploads</th>
                   <th>Acciones</th>
-                  </tr>
+                   </tr>
               </thead>
-
-              <% @payments.each do |payment|%>
- <tr>
+              
+              <% @@documentos_sin_pago.each do |documento| %>
+              
+                <tr>
                     <td></td>
-                    <td><%= payment.documento.numero_de_control %></td>
-                   
-                    <td><%= payment.documento.nombre  %></td>
-                     
-                    <td><% payment.uploads.each do |adjunto| %>
+                    <td><%= documento.id %></td>
+                    <td><%= documento.nombre %></td>
+                    <td><%= documento.numero_de_control  %></td>
+                    <td><% documento.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
                           <p><%= link_to 'Descargar', rails_blob_path(adjunto.blob, disposition: 'attachment') %></p>
-                        <% end %>
-                        </td>
-                        <td><%= payment.status %></td>
+                        <% end %></td>
+                    
+                    <td>
+                          
+                          
 
-                    <% unless current_user.role == "financieros" %>
-                    <td><% payment.documento.uploads.each do |document| %>
-                      <p><%= document.filename.to_s %></p>
-                      <p><%= link_to 'Descargar', rails_blob_path(document.blob, disposition: 'attachment') %></p>
-                    <% end %></td>
-                    <%end%>
-                <td>
-                    <a  class="mostrar"  <%= link_to ({:action => :show, :id => payment.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
-                        <a href="<%= edit_payment_path(payment)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
-                       
-                        
-                        <% if current_user.role == "financieros" && payment.status != "PAGADO" %>
-                          <%= link_to 'Agregar Pago', new_payment_path(payment_id: payment.id) %>
-                        <% elsif current_user.role == "direccion" %>
-                          <%= link_to 'Documento firmado', new_certificate_path(payment_id: payment.id) %>
-                        <% end %>
-                        
+                          <a href="<%= edit_documento_path(documento)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
+                          <a  class="mostrar"  <%= link_to ({:action => :show, :id => documento.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
+                            <% if current_user.role != 'ingles'%>
+                            <%= link_to 'Agregar Pago', new_payment_path(documento_id: documento.id) %>
+                            <%end%>
 
-                    </td>
-                     </tr > 
-<%end %>
+                     </a>
+                     </td>
+                     
+                  <%end%>
 
-<%= link_to 'Agregar referencia', documentos_path %>
 <script>
 $(document).ready(function() {
               var oTable = $("#tabladocumentos").DataTable({
@@ -117,3 +105,4 @@ $(document).ready(function() {
 
                 
             </script>
+                  

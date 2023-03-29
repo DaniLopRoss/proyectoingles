@@ -20,10 +20,11 @@
                     
                   <tr>
                   <th></th>
-                  <th scope="col">ID</th>
+                  <th>Numero de control</th>
                   <th>Nombre</th>
                   <th>Firmadas</th>
                   <th>Comprobante</th>
+                  <th>Estatus</th>
                   <th>Acciones</th>
                   </tr>
               </thead>
@@ -31,8 +32,8 @@
               <% @certificates.each do |certificate|%>
  <tr>
                     <td></td>
-                    <td><%= certificate.id %></td>
-                    <td><%= certificate.nombre  %></td>
+                    <td><%= certificate.documento.numero_de_control  %></td>
+                    <td><%= certificate.documento.nombre  %></td>
                     <td>
                     <% certificate.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
@@ -48,7 +49,7 @@
                           <% end %>
                           
                           </td>
-                          
+                          <td><%= certificate.payment.status  %></td> 
                          
                     <td>
                     <a  class="mostrar"  <%= link_to ({:action => :show, :id => certificate.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
@@ -58,7 +59,9 @@
                         <%end%>
                     </td>
                      </tr > 
+                     
 <%end %>
+<%= link_to 'Agregar firma', payments_path %>
 <script>
 $(document).ready(function() {
               var oTable = $("#tabladocumentos").DataTable({

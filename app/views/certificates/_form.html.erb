@@ -11,7 +11,7 @@
   <% end %>
 
   <div class="form-group row"> 
-    <%= form.label :payment_id,"Número de control",class:'col-sm-2' %>
+    <%= form.label :payment_id,"ID",class:'col-sm-2' %>
     <div class="col-sm-4">
    <%= form.hidden_field :payment_id, value: @payment.id %>
   </div>
@@ -25,14 +25,10 @@
   </div>
   </div>
 
-  <div class="form-group row"> 
-    <%= form.label :nombre,"Nombre",class:'col-sm-2' %>
-    <div class="col-sm-4">
-    <%= form.text_field :nombre, class: "form-control" %>
-  </div>
-  </div>
+
   
- 
-    <button class="btn btn-info" <%= form.submit %> Guardar </button>
-  
+  <%= form.hidden_field :status, value: false %>
+  <%= form.submit data: { confirm: '¿Estás seguro de actualizar el estado del certificado?' }, class: 'btn btn-info' do %>
+    <a href="<%= update_status_certificate_path(certificate) %>">Actualizar estado</a>
+    <% end %>
 <% end %>

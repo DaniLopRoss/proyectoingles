@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :certificates
+  resources :certificates do 
+    member do
+      patch 'update_status'
+    end
+  end
   resources :payments
   resources :referencia
   resources :anexos
@@ -15,6 +19,7 @@ Rails.application.routes.draw do
   get 'financieros', to: 'home#financieros'
   get 'direccion', to: 'home#direccion'
   get 'servicios', to: 'home#serviciosescolares'
+  get 'pagadas', to: 'documentos#index2'
   root to: 'home#index'
   #get 'documentos/:id/download', to: 'documentos#download', as: 'download_documento'
 

@@ -11,7 +11,7 @@
   <% end %>
 
   <div class="form-group row"> 
-    <%= form.label :documento_id,"Número de control",class:'col-sm-2' %>
+    <%= form.label :documento_id,"ID",class:'col-sm-2' %>
     <div class="col-sm-4">
    <%= form.hidden_field :documento_id, value: @documento.id %>
   </div>
@@ -25,12 +25,7 @@
   </div>
   </div>
 
-  <div class="form-group row"> 
-    <%= form.label :nombre,"Número de control",class:'col-sm-2' %>
-    <div class="col-sm-4">
-    <%= form.text_field :nombre, class: "form-control" %>
-  </div>
-  </div>
+ 
   <div class="form-group row">
     <%= form.label :status,"Estatus", class:'col-sm-2'%>
     <div class="col-sm-4">

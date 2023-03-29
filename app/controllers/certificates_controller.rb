@@ -3,11 +3,13 @@ class CertificatesController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @certificates = Certificate.all
+  
+      @certificates = Certificate.all
   end
 
   # GET /payments/1 or /payments/1.json
   def show
+    @certificate = Certificate.includes(:documento).find(params[:id])
   end
 
   # GET /certificates/new
@@ -15,7 +17,11 @@ class CertificatesController < ApplicationController
     @certificate = Certificate.new
     @payment = Payment.find(params[:payment_id])
   end
-
+  def update_status
+    @certificate = Certificate.find(params[:id])
+    @certificate.update(status: true)
+    redirect_to @certificate.payment
+  end
   # GET /payments/1/edit
   def edit
   end
@@ -66,6 +72,6 @@ class CertificatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def certificate_params
-      params.require(:certificate).permit(:nombre, :payment_id, uploads: [])
+      params.require(:certificate).permit(:nombre, :payment_id, :status, uploads: [])
     end
 end

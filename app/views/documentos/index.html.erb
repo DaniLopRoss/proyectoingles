@@ -26,12 +26,13 @@
                   <th scope="col">ID</th>
                   <th>Nombre</th>
                   <th>Numero de control</th>
-                  <th>uploads</th>
+                  <th>Documento</th>
+                  <th>Estatus</th>
                   <th>Acciones</th>
                    </tr>
               </thead>
-
-              <% @documentos.each do |documento|%>
+              
+              <% @documentos.each do |documento| %>
               
                 <tr>
                     <td></td>
@@ -42,24 +43,23 @@
                           <p><%= adjunto.filename.to_s %></p>
                           <p><%= link_to 'Descargar', rails_blob_path(adjunto.blob, disposition: 'attachment') %></p>
                         <% end %></td>
+                        <td><%= documento.payment ? documento.payment.status : "Sin pago" %></td>
                     <td>
-                    
-                    
-                    <a href="<%= edit_documento_path(documento)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
-                    <a  class="mostrar"  <%= link_to ({:action => :show, :id => documento.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
-                      <% if current_user.role != 'ingles' %>
-                      <%= link_to 'Agregar Pago', new_payment_path(documento_id: documento.id) %>
-                      <%end%>
-                      
-                    
-             
 
+                          
+                          
 
+                          <a href="<%= edit_documento_path(documento)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
+                          <a  class="mostrar"  <%= link_to ({:action => :show, :id => documento.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
+                            <% if current_user.role != 'ingles'%>
+                            <%= link_to 'Agregar Pago', new_payment_path(documento_id: documento.id) %>
+                            <%end%>
 
                      </a>
                      </td>
-                  </tr > 
-<%end %>
+                     
+                  <%end%>
+
 <script>
 $(document).ready(function() {
               var oTable = $("#tabladocumentos").DataTable({

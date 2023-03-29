@@ -1,23 +1,26 @@
 <div id="<%= dom_id payment %>">
 <p>
     <strong>Nombre:</strong>
-    <%= payment.nombre %>
+    <%= payment.documento.nombre %>
   </p>
 
   <p>
    
    <strong>Nombre del archivo:</strong>
-
      <% @payment.uploads.each do |upload| %>
  <p><%= upload.blob.filename %></p>
      <%end%> 
  <p>
 <p>
-    <strong>Identificado de la constancia:</strong>
-    <%= payment.documento_id%>
+    <strong>Numero de control:</strong>
+    <%= payment.documento.numero_de_control%>
     
+    <p>
+    <strong>Referencia de pago:</strong>
+    <%= payment.documento.referencia %>
+
 <p>
-    <strong>Estatus:</strong>
+    <strong>Estatus de pago:</strong>
     <%= payment.status %>
   </p>
 </div>

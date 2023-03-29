@@ -103,6 +103,7 @@ gem 'pdf-reader'
 
 gem 'barby', '~> 0.6.0'
 
+gem 'minitest'
 #gem 'zxing', '~> 0.3.0'
 
 #gem 'zxing', require: 'zxing'

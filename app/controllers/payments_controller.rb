@@ -3,8 +3,15 @@ class PaymentsController < ApplicationController
 
   # GET /payments or /payments.json
   def index
-    @payments = Payment.all
+    if current_user.role == "financieros"
+      @payments = Payment.all
+    elsif current_user.role == "direccion"
+      @payments = Payment.left_outer_joins(:certificate).where(certificate: { status: nil })
+    else
+      @payments = []
+    end
   end
+  
 
   # GET /payments/1 or /payments/1.json
   def show
