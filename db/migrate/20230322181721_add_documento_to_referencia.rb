@@ -1,5 +1,0 @@
-class AddDocumentoToReferencia < ActiveRecord::Migration[7.0]
-  def change
-    add_reference :referencia, :documento, null: false, foreign_key: true
-  end
-end

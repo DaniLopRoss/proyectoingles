@@ -16,6 +16,11 @@
     
 </head>
 
+<% if alert %>
+  <div class="alert alert-danger"><%= alert %></div>
+<% end %>
+
+
 <body>
 <div id="main-container" class="container-fluid bg-gray-100"><div class="flex flex-col items-center justify-center h-screen w-full bg-gray-100">
 <div class="flex flex-col md:flex-row w-full md:w-2/3 h-full md:h-auto bg-white rounded-lg md:shadow px-2 py-12 md:px-8 md:py-8">
@@ -61,6 +66,7 @@
             <div class="form-group ">
               <%= f.submit "Ingresar", class: "btn btn-primary btn-usuario btn-block" %>
             </div>
+            
           <% end %>
           <%= link_to 'Registrar', new_user_registration_path%>
 
@@ -72,14 +78,12 @@
 </div>
 </div>
 
-<div id="notify" class="notifxi-alert">
+
 
 </div>
                  
               </p></div></div></div></div></div>
 
-<div id="notify" class="notifxi-alert"></div>
-                  
                     
   
     <iframe name="__privateStripeMetricsController1390" frameborder="0" allowtransparency="true" scrolling="no"

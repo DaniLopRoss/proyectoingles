@@ -41,7 +41,9 @@
                     <td><%= documento.numero_de_control  %></td>
                     <td><% documento.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
-                          <p><%= link_to 'Descargar', rails_blob_path(adjunto.blob, disposition: 'attachment') %></p>
+                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+    
                         <% end %></td>
                         <td><%= documento.payment ? documento.payment.status : "Sin pago" %></td>
                     <td>

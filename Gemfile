@@ -110,4 +110,5 @@ gem 'minitest'
 
 #gem 'ghostscript', '~> 9.21', '>= 9.21.1'
 
-'ruby-serialport'
+gem 'minitest-reporters'
+gem 'rails-controller-testing'

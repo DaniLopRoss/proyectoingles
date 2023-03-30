@@ -263,6 +263,18 @@ a {
   font-size: large;
 }
 
+.download-icon {
+  color: rgb(0, 143, 186); /* Color del icono de descarga */
+  margin-right: 5px; /* Espacio entre el icono y el texto del enlace */
+  font-size: large;
+}
+
+.pdf-icon {
+  color: red; /* Color del icono de PDF */
+  margin-right: 10px; /* Espacio entre el icono y el texto del enlace */
+  font-size: large;
+}
+
 
 .eliminar {
   color: #d82e2e;
@@ -6414,7 +6426,7 @@ textarea.form-control-lg {
   background-color: currentColor;
   opacity: 0.8;
   font-size:0.850rem;
-  border: 1px solid rgba(232, 232, 232 );
+ 
   border-radius: 0.40rem;
 }
 .placeholder.btn::before {
@@ -11381,8 +11393,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   }
 }
 
-/* # Sidebar */
---------------------------------------------------------------*/
+
 .sidebar {
   position: fixed;
   top: 60px;
@@ -13420,3 +13431,21 @@ div.dataTables_wrapper div.dataTables_length label {
 
 }
 
+.tooltip-test {
+  position: relative; /* Establecer posición relativa para el enlace */
+}
+
+.tooltip-test:hover::before {
+  content: attr(title); /* Mostrar el contenido del atributo 'title' como mensaje emergente */
+  position: absolute; /* Establecer posición absoluta para el mensaje emergente */
+  top: -30px; /* Colocar el mensaje emergente encima del icono */
+  left: 50%; /* Centrar el mensaje emergente horizontalmente */
+  transform: translateX(-50%); /* Centrar el mensaje emergente horizontalmente */
+  padding: 5px; /* Agregar un pequeño relleno al mensaje emergente */
+  background-color: black; /* Establecer el color de fondo del mensaje emergente */
+  color: white; /* Establecer el color del texto del mensaje emergente */
+  font-size: 12px; /* Establecer el tamaño de fuente del mensaje emergente */
+  border-radius: 4px; /* Agregar esquinas redondeadas al mensaje emergente */
+  opacity: 0.8; /* Establecer la opacidad del mensaje emergente */
+  white-space: nowrap; /* Evitar que el mensaje emergente se divida en varias líneas */
+}

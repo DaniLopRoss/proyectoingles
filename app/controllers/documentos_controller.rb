@@ -11,9 +11,9 @@ class DocumentosController < ApplicationController
 
   # GET /documentos or /documentos.json
   def index
-    if current_user.role == "financieros" || current_user.role == "dirección"
+    if current_user.role == "financieros" || current_user.role == "direccion"
       @documentos = Documento.sin_pago
-    elsif current_user.role == "ingles"
+    elsif current_user.role == "ingles" || current_user.role == "servicios"
       @documentos = Documento.all
     else
       # Si el usuario no tiene un rol válido, se muestra una lista vacía

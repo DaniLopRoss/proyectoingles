@@ -22,8 +22,9 @@
                   <th></th>
                   <th>Numero de control</th>
                   <th>Nombre</th>
-                  <th>Firmadas</th>
-                  <th>Comprobante</th>
+                  <th>Constancia ingles</th>
+                  <th>Comprobante de pago</th>
+                  <th>Constancias firmadas</th>
                   <th>Estatus</th>
                   <th>Acciones</th>
                   </tr>
@@ -34,29 +35,49 @@
                     <td></td>
                     <td><%= certificate.documento.numero_de_control  %></td>
                     <td><%= certificate.documento.nombre  %></td>
+
+                    <td>
+                    <% certificate.documento.uploads.each do |ad| %>
+                          <p><%= ad.filename.to_s %></p>
+                          <%= link_to '', rails_blob_path(ad.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                          <%= link_to '', rails_blob_path(ad.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+    
+                        <% end %>
+                    </td>
+
+
+
+                    <td>
+                    <% certificate.payment.uploads.each do |pay| %>
+                      <p><%= pay.filename.to_s %></p>
+                      <%= link_to '', rails_blob_path(pay.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                      <%= link_to '', rails_blob_path(pay.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+
+                    <% end %>
+                    
+                    </td>
+
+
                     <td>
                     <% certificate.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
-                          <p><%= link_to 'Descargar', rails_blob_path(adjunto.blob, disposition: 'attachment') %></p>
+                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+    
                         <% end %>
                     </td>
 
                     
-                          <td>
-                          <% certificate.payment.uploads.each do |pay| %>
-                            <p><%= pay.filename.to_s %></p>
-                            <p><%= link_to 'Descargar', rails_blob_path(pay.blob, disposition: 'attachment') %></p>
-                          <% end %>
-                          
-                          </td>
+                         
                           <td><%= certificate.payment.status  %></td> 
                          
                     <td>
                     <a  class="mostrar"  <%= link_to ({:action => :show, :id => certificate.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
                         <a href="<%= edit_certificate_path(certificate)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
-                        <% if current_user.role != 'servicios' %>
+                        <% if current_user.role != 'servicios' && certificate.status %>
                         <%= link_to 'Documento firmado', new_certificate_path(certificate_id: certificate.id) %>
                         <%end%>
+
                     </td>
                      </tr > 
                      

@@ -24,7 +24,7 @@
                   <th>Nombre</th>
                   <th>Comprobante de pago</th>
                   <th>Estatus</th>
-                  
+                 
                   <% unless current_user.role == "financieros" %>
                   <th>Constancia  </th>
                   <% end %>
@@ -42,7 +42,9 @@
                      
                     <td><% payment.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
-                          <p><%= link_to 'Descargar', rails_blob_path(adjunto.blob, disposition: 'attachment') %></p>
+                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+    
                         <% end %>
                         </td>
                         <td><%= payment.status %></td>
@@ -50,7 +52,9 @@
                     <% unless current_user.role == "financieros" %>
                     <td><% payment.documento.uploads.each do |document| %>
                       <p><%= document.filename.to_s %></p>
-                      <p><%= link_to 'Descargar', rails_blob_path(document.blob, disposition: 'attachment') %></p>
+                      <%= link_to '', rails_blob_path(document.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                      <%= link_to '', rails_blob_path(document.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+
                     <% end %></td>
                     <%end%>
                 <td>
