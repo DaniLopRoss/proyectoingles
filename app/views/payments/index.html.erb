@@ -1,10 +1,10 @@
 <div align="center">
 <p style="color: green"><%= notice %></p>
 <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">Pagadas</a></li>
-          <li class="breadcrumb-item active">Listar pagadas</li>
+          <li class="breadcrumb-item"><a href="">Constancias pagadas</a></li>
+          <li class="breadcrumb-item active">Listar constancias pagadas</li>
         </ol>
-<h4>Pagadas</h4>
+<h4>Constancias Pagadas</h4>
 
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -22,12 +22,14 @@
                   <th></th>
                   <th scope="col">No.Control</th>
                   <th>Nombre</th>
+
+                  <% unless current_user.role == "financieros" %>
+                    <th>Constancia  </th>
+                    <% end %>
                   <th>Comprobante de pago</th>
                   <th>Estatus</th>
                  
-                  <% unless current_user.role == "financieros" %>
-                  <th>Constancia  </th>
-                  <% end %>
+                  
                   
                   <th>Acciones</th>
                   </tr>
@@ -39,6 +41,15 @@
                     <td><%= payment.documento.numero_de_control %></td>
                    
                     <td><%= payment.documento.nombre  %></td>
+
+                    <% unless current_user.role == "financieros" %>
+                      <td><% payment.documento.uploads.each do |document| %>
+                        <p><%= document.filename.to_s %></p>
+                        <%= link_to '', rails_blob_path(document.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                        <%= link_to '', rails_blob_path(document.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+  
+                      <% end %></td>
+                      <%end%>
                      
                     <td><% payment.uploads.each do |adjunto| %>
                           <p><%= adjunto.filename.to_s %></p>
@@ -47,16 +58,10 @@
     
                         <% end %>
                         </td>
-                        <td><%= payment.status %></td>
+                        
 
-                    <% unless current_user.role == "financieros" %>
-                    <td><% payment.documento.uploads.each do |document| %>
-                      <p><%= document.filename.to_s %></p>
-                      <%= link_to '', rails_blob_path(document.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
-                      <%= link_to '', rails_blob_path(document.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
-
-                    <% end %></td>
-                    <%end%>
+                  
+                    <td><%= payment.status %></td>
                 <td>
                     <a  class="mostrar"  <%= link_to ({:action => :show, :id => payment.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
                         <a href="<%= edit_payment_path(payment)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
@@ -72,8 +77,14 @@
                     </td>
                      </tr > 
 <%end %>
-
+<% if current_user.role == "financieros" %>
 <%= link_to 'Agregar referencia', documentos_path %>
+<%end %>
+
+<% if current_user.role == "direccion" %>
+  <%= link_to 'Constancias firmadas', certificates_path %>
+  <%end %>
+  
 <script>
 $(document).ready(function() {
               var oTable = $("#tabladocumentos").DataTable({

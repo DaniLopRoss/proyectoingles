@@ -7,4 +7,5 @@ Minitest::Reporters.use!
 
 class ActiveSupport::TestCase
   # Add your customizations here
+
 end

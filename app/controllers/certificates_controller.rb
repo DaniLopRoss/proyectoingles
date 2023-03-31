@@ -35,8 +35,13 @@ class CertificatesController < ApplicationController
     logger.debug("Payment ID: #{params[:certificate][:payment_id]}")
 
     if @certificate.save
+      blob = @certificate.uploads.first.blob
+      nombre=blob.filename
+      @certificate.nombre = nombre
+      @certificate.save
       redirect_to certificate_path(@certificate), notice: "La firma ha sido agregado con éxito."
       else
+        flash[:error] = "El archivo ya existe"
       render :new
     end
   end

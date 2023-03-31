@@ -34,8 +34,12 @@ class PaymentsController < ApplicationController
     @payment.documento_id = params[:payment][:documento_id]
 
     logger.debug("Documento ID: #{params[:payment][:documento_id]}")
-
+    
     if @payment.save
+      blob = @payment.uploads.first.blob
+      nombre=blob.filename
+      @payment.nombre = nombre
+      @payment.save
       redirect_to payment_path(@payment), notice: "El pago ha sido agregado con éxito."
       #redirect_to document_path(@payment.documento), notice: "El pago ha sido agregado con éxito."
     else

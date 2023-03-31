@@ -4,10 +4,10 @@
 <div align="center">
 <p style="color: green"><%= notice %></p>
 <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">Documentos</a></li>
-          <li class="breadcrumb-item active">Listar documentos</li>
+          <li class="breadcrumb-item"><a href="">Constancias de Inglés</a></li>
+          <li class="breadcrumb-item active">Listar constancias</li>
         </ol>
-<h4>Documentos</h4>
+<h4>Constancias de Inglés</h4>
 
 <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
@@ -61,7 +61,14 @@
                      </td>
                      
                   <%end%>
+                  <% if current_user.role == "financieros" %>
+                    <%= link_to 'Constancias pagadas', payments_path %>
+                    <%end %>
 
+                    <% if current_user.role == "ingles" %>
+                      <%= link_to 'Agregar constancia de ingles', new_documento_path %>
+                      <%end %>
+                    
 <script>
 $(document).ready(function() {
               var oTable = $("#tabladocumentos").DataTable({

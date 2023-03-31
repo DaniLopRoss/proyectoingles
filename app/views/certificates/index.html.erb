@@ -82,7 +82,9 @@
                      </tr > 
                      
 <%end %>
+<% if current_user.role == "direccion" %>
 <%= link_to 'Agregar firma', payments_path %>
+<%end %>
 <script>
 $(document).ready(function() {
               var oTable = $("#tabladocumentos").DataTable({

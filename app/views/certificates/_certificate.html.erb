@@ -15,7 +15,7 @@
 </p>
 <p>
 <strong>Fecha:  </strong>
-<%= @certificate.documento.fecha%>
+<%= @certificate.documento.created_at%>
 </p>
   <p>
    
@@ -23,7 +23,13 @@
 
      <% @certificate.uploads.each do |upload| %>
  <p><%= upload.blob.filename %></p>
+
+ <%= link_to '', rails_blob_path(upload.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+  <%= link_to '', rails_blob_path(upload.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+    
      <%end%> 
+
+
 
 
 </div>
