@@ -13449,3 +13449,24 @@ div.dataTables_wrapper div.dataTables_length label {
   opacity: 0.8; /* Establecer la opacidad del mensaje emergente */
   white-space: nowrap; /* Evitar que el mensaje emergente se divida en varias líneas */
 }
+
+.green-box {
+  background-color: #E9FFE5;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  border-color: #008C13;
+  width: 75rem;
+
+}
+
+.alert.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  width: 75rem;
+}
+
+.payment-info {
+  display: inline-block;
+}

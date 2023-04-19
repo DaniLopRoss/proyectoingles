@@ -11,10 +11,6 @@ class UserTest < ActiveSupport::TestCase
     assert_respond_to user, :avatar
   end
 
-  test "user has many anexos" do
-    user = User.new
-    assert_respond_to user, :anexos
-  end
 
   test "user is database authenticatable" do
     assert_includes User.devise_modules, :database_authenticatable

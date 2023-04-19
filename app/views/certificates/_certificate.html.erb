@@ -5,6 +5,7 @@
 <strong>Nombre del alumno: </strong>
  <%= @certificate.documento.numero_de_control %>
 </p>
+
 <p>
 <strong>Numero de control:  </strong>
 <%= @certificate.documento.nombre %>
@@ -30,6 +31,35 @@
      <%end%> 
 
 
+     <div id="document-info-toggle">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>Información del documento</span>
+          </div>
+
+          <div id="document-info" style="display: none;">
+            <div class="alert alert-success">
+              <p>Subido por dirección <i class="bi bi-check-circle-fill me-2"></i></p>
+              <p>Subido por el usuario: <%=@certificate.user.nombre %></p>
+              <p>Fecha de subida: : <%= certificate.created_at %></p>
+             
+                <p class="payment-info">Estatus de pago: <%= certificate.payment.status %></p>
+                <p class="payment-info">validado por <%= certificate.payment.user.nombre %></p>
+              
+
+            </div>
+          </div>
+          <p>
+          </p>
+
+
 
 
 </div>
+
+<script>
+  $(document).ready(function() {
+    $("#document-info-toggle").click(function() {
+      $("#document-info").toggle();
+    });
+  });
+</script>

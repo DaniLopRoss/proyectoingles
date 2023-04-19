@@ -1,20 +1,41 @@
 <div id="<%= dom_id documento %>">
 
+    <p>
+        <strong>Numero de control:</strong>
+        <%= documento.numero_de_control %>
+    </p>
+
+    <p>
+        <strong>Nombre:</strong>
+        <%= documento.nombre %>
+    </p>
+    <p>
+        <strong>Nombre del archivo:</strong>
+        <% @documento.uploads.each do |adjunto| %>
+        <%= adjunto.filename.to_s %>
+
+        <% end %>
+
+        <div id="document-info-toggle">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>Información del documento</span>
+        </div>
+
+        <div id="document-info" style="display: none;">
+            <div class="alert alert-success">
+                <p>Subido por inglés <i class="bi bi-check-circle-fill me-2"></i></p>
+                <p>Subido por el usuario: <%= @documento.user.nombre %></p>
+                <p>Fecha de subida: <%= @documento.created_at %></p>
+            </div>
+        </div>
 <p>
-<strong>Numero de control:</strong>
-<%= documento.numero_de_control %>
 </p>
-
-<p>
-<strong>Nombre:</strong>
-<%= documento.nombre %>
-</p>
-<p>
-<strong>Nombre del archivo:</strong>
-<% @documento.uploads.each do |adjunto| %>
-<p><%= adjunto.filename.to_s %></p>
-
-<% end %>
-
-
 </div>
+
+<script>
+    $(document).ready(function() {
+        $("#document-info-toggle").click(function() {
+            $("#document-info").toggle();
+        });
+    });
+</script>

@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
          has_many :documentos
+         has_many :payments
          has_one_attached :avatar
-         has_many :anexos
+         has_many :certificates
 
 end

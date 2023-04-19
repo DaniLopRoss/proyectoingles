@@ -32,6 +32,7 @@ class PaymentsController < ApplicationController
     
     @payment = Payment.new(payment_params)
     @payment.documento_id = params[:payment][:documento_id]
+    @payment.user = current_user
 
     logger.debug("Documento ID: #{params[:payment][:documento_id]}")
     
@@ -88,6 +89,6 @@ class PaymentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def payment_params
-      params.require(:payment).permit(:nombre, :status, :documento_id, uploads: [])
+      params.require(:payment).permit(:user_id,:nombre, :status, :documento_id, uploads: [])
     end
 end

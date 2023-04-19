@@ -3,6 +3,6 @@ class Certificate < ApplicationRecord
     belongs_to :payment, autosave:  true
     has_one :documento, through: :payment
    # validates :nombre, uniqueness: true
-
+   belongs_to :user
     
 end

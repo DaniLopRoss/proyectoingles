@@ -1,26 +1,54 @@
 <div id="<%= dom_id payment %>">
-<p>
+  <p>
     <strong>Nombre:</strong>
     <%= payment.documento.nombre %>
   </p>
 
   <p>
-   
-   <strong>Nombre del archivo:</strong>
-     <% @payment.uploads.each do |upload| %>
- <p><%= upload.blob.filename %></p>
-     <%end%> 
- <p>
-<p>
-    <strong>Numero de control:</strong>
-    <%= payment.documento.numero_de_control%>
-    
-    <p>
-    <strong>Referencia de pago:</strong>
-    <%= payment.documento.referencia %>
 
-<p>
-    <strong>Estatus de pago:</strong>
-    <%= payment.status %>
-  </p>
+    <strong>Nombre del archivo:</strong>
+    <% @payment.uploads.each do |upload| %>
+    <p><%= upload.blob.filename %></p>
+    <%end%>
+    <p>
+      <p>
+        <strong>Numero de control:</strong>
+        <%= payment.documento.numero_de_control%>
+
+        <p>
+          <strong>Referencia de pago:</strong>
+          <%= payment.documento.referencia %>
+
+          <p>
+            <strong>Estatus de pago:</strong>
+            <%= payment.status %>
+          </p>
+
+          <div id="document-info-toggle">
+            <i class="bi bi-info-circle-fill"></i>
+            <span>Información del documento</span>
+          </div>
+
+          <div id="document-info" style="display: none;">
+            <div class="alert alert-success">
+              <p>Subido por inglés <i class="bi bi-check-circle-fill me-2"></i></p>
+              <p>Subido por el usuario: <%= payment.documento.user.nombre %></p>
+              <p>Fecha de subida: <%= payment.documento.created_at %></p>
+             
+                <p class="payment-info">Estatus de pago: <%= payment.status %></p>
+                <p class="payment-info">validado por <%= payment.user.nombre %></p>
+              
+
+            </div>
+          </div>
+          <p>
+          </p>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $("#document-info-toggle").click(function() {
+      $("#document-info").toggle();
+    });
+  });
+</script>

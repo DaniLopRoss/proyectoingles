@@ -31,6 +31,7 @@ class CertificatesController < ApplicationController
     
     @certificate = Certificate.new(certificate_params)
     @certificate.payment_id = params[:certificate][:payment_id]
+    @certificate.user = current_user
 
     logger.debug("Payment ID: #{params[:certificate][:payment_id]}")
 
@@ -77,6 +78,6 @@ class CertificatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def certificate_params
-      params.require(:certificate).permit(:nombre, :payment_id, :status, uploads: [])
+      params.require(:certificate).permit(:user_id, :nombre, :payment_id, :status, uploads: [])
     end
 end
