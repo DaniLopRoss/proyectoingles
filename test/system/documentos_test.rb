@@ -1,6 +1,7 @@
 require "application_system_test_case"
 
 class DocumentosTest < ApplicationSystemTestCase
+  fixtures :documentos
   setup do
     @documento = documentos(:one)
   end

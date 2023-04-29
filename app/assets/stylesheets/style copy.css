@@ -12132,7 +12132,7 @@ table {
   border-bottom: 1px solid #e8eff9;
 }
 
-/*-------------------------------------------------------------------*/
+
 /* === Plugin overrides === */
 /* Ace Editor */
 .ace_editor {
@@ -13464,9 +13464,11 @@ div.dataTables_wrapper div.dataTables_length label {
   color: #155724;
   background-color: #d4edda;
   border-color: #c3e6cb;
-  width: 75rem;
 }
 
 .payment-info {
   display: inline-block;
+}
+.hidden-div {
+  display: none;
 }

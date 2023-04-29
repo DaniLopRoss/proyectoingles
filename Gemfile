@@ -69,6 +69,7 @@ group :development do
   # gem "spring"
 end
 
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
@@ -112,3 +113,9 @@ gem 'minitest'
 
 gem 'minitest-reporters'
 gem 'rails-controller-testing'
+
+gem 'minitest-rails'
+
+group :development, :test do
+  gem 'simplecov'
+end

@@ -1,134 +1,138 @@
 <div align="center">
-<p style="color: green"><%= notice %></p>
-<ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="">Firmadas</a></li>
-          <li class="breadcrumb-item active">Listar firmadas</li>
-        </ol>
-<h4>Firmadas</h4>
+  <p style="color: green"><%= notice %></p>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="">Firmadas</a></li>
+    <li class="breadcrumb-item active">Listar firmadas</li>
+  </ol>
+  <h4>Firmadas</h4>
 
-<div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                 
-                  <p class="card-description">
-                    
-                  </p>
-                  <div class="table-responsive pt-3">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
 
-                  <table class="table table-bordered" id="tabladocumentos">
-                  <thead class="thead-blue" >
-                    
-                  <tr>
-                  <th></th>
-                  <th>Numero de control</th>
-                  <th>Nombre</th>
-                  <th>Constancia ingles</th>
-                  <th>Comprobante de pago</th>
-                  <th>Constancias firmadas</th>
-                  <th>Estatus</th>
-                  <th>Acciones</th>
-                  </tr>
-              </thead>
+        <p class="card-description">
 
-              <% @certificates.each do |certificate|%>
- <tr>
-                    <td></td>
-                    <td><%= certificate.documento.numero_de_control  %></td>
-                    <td><%= certificate.documento.nombre  %></td>
+        </p>
+        <div class="table-responsive pt-3">
 
-                    <td>
-                    <% certificate.documento.uploads.each do |ad| %>
-                          <p><%= ad.filename.to_s %></p>
-                          <%= link_to '', rails_blob_path(ad.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
-                          <%= link_to '', rails_blob_path(ad.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
-    
-                        <% end %>
-                    </td>
+          <table class="table table-bordered" id="tabladocumentos">
+            <thead class="thead-blue">
+
+              <tr>
+                <th></th>
+                <th>Numero de control</th>
+                <th>Nombre</th>
+                <th>Constancia ingles</th>
+                <th>Comprobante de pago</th>
+                <th>Constancias firmadas</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+
+            <% @certificates.each do |certificate|%>
+            <tr>
+              <td></td>
+              <td><%= certificate.documento.numero_de_control if certificate.documento %></td>
+              <% if certificate.documento %>
+              <td><%= certificate.documento.nombre %></td>
+              <% else %>
+              <td>No se encontró el documento</td>
+              <% end %>
+
+              <td>
+              <% if certificate.documento %>
+                <% certificate.documento.uploads.each do |ad| %>
+                  <p><%= ad.filename.to_s %></p>
+                  <%= link_to '', rails_blob_path(ad.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                  <%= link_to '', rails_blob_path(ad.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+                <% end %>
+              <% end %>
+            </td>
+            
+
+            <td>
+            <% if certificate.payment && certificate.payment.uploads %>
+              <% certificate.payment.uploads.each do |pay| %>
+                <p><%= pay.filename.to_s %></p>
+                <%= link_to '', rails_blob_path(pay.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                <%= link_to '', rails_blob_path(pay.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+              <% end %>
+            <% end %>
+          </td>
+          
+
+              <td>
+                <% certificate.uploads.each do |adjunto| %>
+                <p><%= adjunto.filename.to_s %></p>
+                <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+                <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+
+                <% end %>
+              </td>
+
+              <td><%= certificate.payment ? certificate.payment.status : 'No payment' %></td>
 
 
+              <td>
+                <a class="mostrar" <%= link_to ({:action => :show, :id => certificate.id}) do %><i
+                  class="bi bi-eye-fill"></i><%end%></a>
+                <a href="<%= edit_certificate_path(certificate)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
+                <% if current_user.role != 'servicios' && certificate.status %>
+                <%= link_to 'Documento firmado', new_certificate_path(certificate_id: certificate.id) %>
+                <%end%>
 
-                    <td>
-                    <% certificate.payment.uploads.each do |pay| %>
-                      <p><%= pay.filename.to_s %></p>
-                      <%= link_to '', rails_blob_path(pay.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
-                      <%= link_to '', rails_blob_path(pay.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
+              </td>
+            </tr>
 
-                    <% end %>
-                    
-                    </td>
-
-
-                    <td>
-                    <% certificate.uploads.each do |adjunto| %>
-                          <p><%= adjunto.filename.to_s %></p>
-                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
-                          <%= link_to '', rails_blob_path(adjunto.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
-    
-                        <% end %>
-                    </td>
-
-                    
-                         
-                          <td><%= certificate.payment.status  %></td> 
-                         
-                    <td>
-                    <a  class="mostrar"  <%= link_to ({:action => :show, :id => certificate.id}) do %><i class="bi bi-eye-fill"></i><%end%></a>
-                        <a href="<%= edit_certificate_path(certificate)%>" class="edit"><i class="bi bi-pencil-square"></i></a>
-                        <% if current_user.role != 'servicios' && certificate.status %>
-                        <%= link_to 'Documento firmado', new_certificate_path(certificate_id: certificate.id) %>
-                        <%end%>
-
-                    </td>
-                     </tr > 
-                     
-<%end %>
-<% if current_user.role == "direccion" %>
-<%= link_to 'Agregar firma', payments_path %>
-<%end %>
-<script>
-$(document).ready(function() {
-              var oTable = $("#tabladocumentos").DataTable({
-                language: {
-                  url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-MX.json'
-              },
-
-          responsive: "true",
-          dom: 'Bfrtilp',    
-                buttons:[ 
-        {
-          extend:    'excelHtml5',
-          text:      '<i class="bi bi-file-earmark-excel"></i> ',
-          titleAttr: 'Exportar a Excel',
-          className: 'btn btn-success'
-        },
-        {
-          extend:    'pdfHtml5',
-          text:      '<i class="bi bi-file-earmark-pdf"></i> ',
-          titleAttr: 'Exportar a PDF',
-          className: 'btn btn-danger'
-        },
-        {
-          extend:    'print',
-          text:      '<i class="bi bi-printer"></i> ',
-          titleAttr: 'Imprimir',
-          className: 'btn btn-info'
-        },
-      ],
-                columnDefs: [ {
-            sortable: false,
-            "class": "index",
-            targets: 0
-        } ],
-        order: [[ 1, 'asc' ]],
-        fixedColumns: true
-        } );
- 
-    oTable.on( 'order.dt search.dt', function () {
-        oTable.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-            cell.innerHTML = i+1;
-        } );
-    } ).draw();
-            }); 
-
-                
+            <%end %>
+            <% if current_user.role == "direccion" %>
+            <%= link_to 'Agregar firma', payments_path %>
+            <%end %>
+            <script>
+              $(document).ready(function() {
+                var oTable = $("#tabladocumentos").DataTable({
+                  language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-MX.json'
+                  },
+                  responsive: "true",
+                  dom: 'Bfrtilp',
+                  buttons: [{
+                      extend: 'excelHtml5',
+                      text: '<i class="bi bi-file-earmark-excel"></i> ',
+                      titleAttr: 'Exportar a Excel',
+                      className: 'btn btn-success'
+                    },
+                    {
+                      extend: 'pdfHtml5',
+                      text: '<i class="bi bi-file-earmark-pdf"></i> ',
+                      titleAttr: 'Exportar a PDF',
+                      className: 'btn btn-danger'
+                    },
+                    {
+                      extend: 'print',
+                      text: '<i class="bi bi-printer"></i> ',
+                      titleAttr: 'Imprimir',
+                      className: 'btn btn-info'
+                    },
+                  ],
+                  columnDefs: [{
+                    sortable: false,
+                    "class": "index",
+                    targets: 0
+                  }],
+                  order: [
+                    [1, 'asc']
+                  ],
+                  fixedColumns: true
+                });
+                oTable.on('order.dt search.dt', function() {
+                  oTable.column(0, {
+                    search: 'applied',
+                    order: 'applied'
+                  }).nodes().each(function(cell, i) {
+                    cell.innerHTML = i + 1;
+                  });
+                }).draw();
+              });
             </script>

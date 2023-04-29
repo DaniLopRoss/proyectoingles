@@ -27,15 +27,6 @@ class DocumentosController < ApplicationController
     @documento = Documento.find(params[:id])
   end
 
-  # def download_pdf
-  #   @documento = Documento.find(params[:id])
-  #   send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type: 'application/pdf', disposition: 'attachment'
-  #   #send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type:  'application/pdf'
-    
-  # end
-
-
-
 
   # GET /documentos/new
   def new
@@ -61,6 +52,7 @@ class DocumentosController < ApplicationController
 
        # @document.pdf_path = pdf_path.to_s
         # Obtenemos el objeto ActiveStorage::Blob asociado al archivo subido
+       
         blob = @documento.uploads.first.blob
         md5 = blob.checksum
         referencia=blob.filename
@@ -73,7 +65,14 @@ class DocumentosController < ApplicationController
         pdf_content = blob.download
         
         # Crear un objeto PDF::Reader
-        pdf_reader = PDF::Reader.new(StringIO.new(pdf_content))
+        begin
+          pdf_reader = PDF::Reader.new(StringIO.new(pdf_content))
+        rescue PDF::Reader::MalformedPDFError => e
+          # Manejar la excepción aquí
+          puts "Error al leer el archivo PDF: #{e.message}"
+        end
+        
+        #pdf_reader = PDF::Reader.new(StringIO.new(pdf_content))
 
         #send_data @documento.archivo_pdf.download, filename: @documento.archivo_pdf.filename.to_s, type:  'application/pdf'
 
@@ -84,6 +83,7 @@ class DocumentosController < ApplicationController
 
         serial_regex = /\d{16}/ 
         serial = ""
+        if pdf_reader && pdf_reader.pages
         pdf_reader.pages.each do |page|
           page_content = page.text
         
@@ -93,7 +93,7 @@ class DocumentosController < ApplicationController
             serial = serial_match[0]
             break # Si se encuentra el código de barras, salir del bucle
           end
-        end
+         end
                 
         #pdf_path = blob.service.path_for(blob.key)
         # Obtener el contenido de cada página del PDF
@@ -154,18 +154,18 @@ class DocumentosController < ApplicationController
           end
 
           if content.include?("el día")
-            fecha = content[/día\s*([^.]*)/, 1].strip
-            fecha = DateTime.parse(fecha).strftime('%Y-%m-%d %H:%M:%S')
-  
-            # Convertir la cadena de texto a un objeto DateTime
-          
+            fecha = content[/día\s*(\d{1,2})/, 1].strip
+            fecha = DateTime.strptime("#{fecha} #{Time.now.strftime('%H:%M:%S')}", '%d %H:%M:%S').strftime('%Y-%m-%d %H:%M:%S')
+            puts "Fecha"
+            puts fecha
+
           end          
 
           if content.include?("CADENA DE COMPROBACIÓN:")
             cadena_comprobacion = content[/COMPROBACIÓN:\s*(.*)/, 1].strip
           end
         end
-        
+      end
         # Crear un documento XML con Nokogiri
         
         builder = Nokogiri::XML::Builder.new do |xml|
@@ -252,13 +252,20 @@ end
 
   # DELETE /documentos/1 or /documentos/1.json
   def destroy
-    @documento.destroy
-
-    respond_to do |format|
-      format.html { redirect_to documentos_url, notice: "Documento was successfully destroyed." }
-      format.json { head :no_content }
+    begin
+      @documento.destroy
+      respond_to do |format|
+        format.html { redirect_to documentos_url, notice: "Documento was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      respond_to do |format|
+        format.html { redirect_to documentos_url, alert: "Cannot delete document because it is associated with payments." }
+        format.json { render json: { error: e.message }, status: :unprocessable_entity }
+      end
     end
   end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -270,64 +277,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def documento_params
-      params.require(:documento).permit(:user_id,:referencia, uploads: [])
-    end
-
-
-
-
-    # def view_pdf
-    #   @documento = Documento.find(params[:id])
-    #   pdf_path = @documento.uploads.first.service_url
-    #   send_file pdf_path, type: 'application/pdf', disposition: 'inline'
-    # end
-    
-
-    # def new_documento_anexo
-    #   @documento = Documento.find(params[:id])
-    #   @referencium = Referencium.new
-    # end
-    
-
-
-
-
-
-
-
-    # def view_pdf
-    #   # Obtener el valor del código de barras desde el parámetro de la URL
-    #   serial = params[:serial]
-    
-    #   # Buscar el documento correspondiente al código de barras
-    #   documento = Documento.find_by(serial: serial)
-    
-    #   if documento
-    #     # Obtener el primer objeto ActiveStorage::Blob asociado a este documento
-    #     blob = documento.uploads.first.blob
-    
-    #     if blob
-    #       # Obtener la URL de descarga del archivo
-    #       url = url_for(blob)
-    
-    #       # Redirigir al usuario a la URL para descargar y visualizar el archivo
-    #       redirect_to url and return
-    #     end
-    #   end
-    
-    #   # Si no se encuentra el documento o el archivo no existe, mostrar un mensaje de error
-    #   flash[:error] = "El archivo correspondiente al código de barras #{serial} no se ha encontrado."
-    #   redirect_to root_path
-    # end
-    
-    def read_barcode
-      codigo_barras = # Leer código de barras
-      redirect_to view_pdf_path(codigo_barras)
-    end
-
-
-
-    
-  
-    
+      params.require(:documento).permit(:serial,:no_oficio,:asunto,:plan,:nombre ,:numero_de_control,:carrera,:nivel,:periodo, :md5,:cadena_comprobacion,:fecha,:user_id,:referencia, uploads: [])
+    end    
 end

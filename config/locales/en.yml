@@ -38,3 +38,4 @@ es:
             email:
               blank: "no puede estar vacio"
               required: "Debe ingresar un usuario"
+              Uploads translation missing: "Debe adjuntar un archivo"

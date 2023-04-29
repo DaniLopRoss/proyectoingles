@@ -22,10 +22,11 @@
         </div>
 
         <div id="document-info" style="display: none;">
-            <div class="alert alert-success">
+            <div class="alert alert-success" style="width: 75rem">
                 <p>Subido por inglés <i class="bi bi-check-circle-fill me-2"></i></p>
                 <p>Subido por el usuario: <%= @documento.user.nombre %></p>
                 <p>Fecha de subida: <%= @documento.created_at %></p>
+                <p>MD5: <%= @documento.md5 %></p>
             </div>
         </div>
 <p>

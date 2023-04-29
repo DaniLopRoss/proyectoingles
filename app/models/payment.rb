@@ -3,9 +3,12 @@ class Payment < ApplicationRecord
     has_many_attached :uploads 
     has_one :certificate
     belongs_to :user
-    
+    validates :uploads, presence: { message: "necesita adjuntar un documento" }
 
-    def self.sin_certificado
-        where(certificate_id: nil)
-      end    
+   
 end
+
+
+   # def self.sin_certificado
+    #     where(certificate_id: nil)
+    #   end  

@@ -2,19 +2,22 @@
   <% if certificate.errors.any? %>
     <div style="color: red">
       
-      <ul>
-        <% certificate.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-
-      </ul>
-    </div>
-  <% end %>
+    <div id="error_explanation">
+     <ul>
+      <% certificate.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
   <div class="form-group row"> 
     <%= form.label :payment_id,"ID",class:'col-sm-2' %>
     <div class="col-sm-4">
-   <%= form.hidden_field :payment_id, value: @payment.id %>
+    <% if @payment %>
+    <%= form.hidden_field :payment_id, value: @payment.id %>
+  <% end %>
+  
   </div>
   </div>
 

@@ -41,6 +41,7 @@ class CertificatesController < ApplicationController
       @certificate.nombre = nombre
       @certificate.save
       redirect_to certificate_path(@certificate), notice: "La firma ha sido agregado con éxito."
+
       else
         flash[:error] = "El archivo ya existe"
       render :new
@@ -65,7 +66,7 @@ class CertificatesController < ApplicationController
     @certificate.destroy
 
     respond_to do |format|
-      format.html { redirect_to payments_url, notice: "Certificate was successfully destroyed." }
+      format.html { redirect_to certificates_url, notice: "Certificate was successfully destroyed." }
       format.json { head :no_content }
     end
   end

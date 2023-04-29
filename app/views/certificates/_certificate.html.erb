@@ -1,58 +1,81 @@
 <div id="<%= dom_id certificate %>">
 
-
-<p>
-<strong>Nombre del alumno: </strong>
- <%= @certificate.documento.numero_de_control %>
-</p>
-
-<p>
-<strong>Numero de control:  </strong>
-<%= @certificate.documento.nombre %>
-</p>
-<p>
-<strong>Carrera:  </strong>
-<%= @certificate.documento.carrera%>
-</p>
-<p>
-<strong>Fecha:  </strong>
-<%= @certificate.documento.created_at%>
-</p>
   <p>
-   
-   <strong>Nombre del archivo:</strong>
+    <strong>Nombre del alumno: </strong>
+    <% if @certificate.documento %>
+    <%= @certificate.documento.numero_de_control %>
+    <% else %>
+    Documento no encontrado
+    <% end %>
+  </p>
 
-     <% @certificate.uploads.each do |upload| %>
- <p><%= upload.blob.filename %></p>
+  <p>
+    <strong>Numero de control: </strong>
+    <% if @certificate.documento %>
+    <%= @certificate.documento.nombre %>
+    <% else %>
+    Documento no encontrado
+    <% end %>
 
- <%= link_to '', rails_blob_path(upload.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
-  <%= link_to '', rails_blob_path(upload.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
-    
-     <%end%> 
+  </p>
+  <p>
+    <strong>Carrera: </strong>
+    <% if @certificate.documento.present? %>
+    <%= @certificate.documento.carrera %>
+    <% else %>
+    <p>El documento no está disponible.</p>
+    <% end %>
 
+  </p>
+  <p>
+    <strong>Fecha: </strong>
+    <% if @certificate && @certificate.documento %>
+    <%= @certificate.documento.created_at %>
+    <% else %>
+    <p>No se encontró el certificado solicitado.</p>
+    <% end %>
 
-     <div id="document-info-toggle">
-            <i class="bi bi-info-circle-fill"></i>
-            <span>Información del documento</span>
-          </div>
+  </p>
+  <p>
 
-          <div id="document-info" style="display: none;">
-            <div class="alert alert-success">
-              <p>Subido por dirección <i class="bi bi-check-circle-fill me-2"></i></p>
-              <p>Subido por el usuario: <%=@certificate.user.nombre %></p>
-              <p>Fecha de subida: : <%= certificate.created_at %></p>
-             
-                <p class="payment-info">Estatus de pago: <%= certificate.payment.status %></p>
-                <p class="payment-info">validado por <%= certificate.payment.user.nombre %></p>
-              
+    <strong>Nombre del archivo:</strong>
 
-            </div>
-          </div>
-          <p>
-          </p>
+    <% @certificate.uploads.each do |upload| %>
+    <p><%= upload.blob.filename %></p>
 
+    <%= link_to '', rails_blob_path(upload.blob, disposition: 'attachment'), target: '_blank', class: 'bi bi-download download-icon tooltip-test', title: 'Descargar' %>
+    <%= link_to '', rails_blob_path(upload.blob, disposition: 'inline'), target: '_blank', class: 'bi bi-file-earmark-pdf pdf-icon' %>
 
+    <%end%>
 
+    <div id="document-info-toggle">
+      <i class="bi bi-info-circle-fill"></i>
+      <span>Información del documento</span>
+    </div>
+
+    <div id="document-info" style="display: none;">
+      <div class="alert alert-success" style="width: 75rem">
+        <p>Subido por dirección <i class="bi bi-check-circle-fill me-2"></i></p>
+        <% if @certificate.user %>
+        <p>Subido por el usuario: <%= @certificate.user.nombre %></p>
+        <% end %>
+
+        <p>Fecha de subida: : <%= certificate.created_at %></p>
+
+        <% if certificate.payment %>
+        <p class="payment-info">Estatus de pago: <%= certificate.payment.status %></p>
+        <% end %>
+        <% if certificate.payment %>
+        <p class="payment-info">validado por <%= certificate.payment.user.nombre %></p>
+        <% end %>
+
+        <% if certificate.documento %>
+        <p>MD5: <%= @certificate.documento.md5 %></p>
+        <% end %>
+      </div>
+    </div>
+    <p>
+    </p>
 
 </div>
 

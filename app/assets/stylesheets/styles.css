@@ -502,12 +502,7 @@ select:disabled {
   display: none;
 }
 
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button;
-}
+
 
 button:not(:disabled),
 [type="button"]:not(:disabled),
@@ -567,7 +562,7 @@ legend + * {
 
 [type="search"] {
   outline-offset: -2px;
-  -webkit-appearance: textfield;
+
 }
 
 /* rtl:raw:
@@ -2431,7 +2426,7 @@ textarea.form-control-lg {
   background-size: contain;
   border: 1px solid rgba(0, 0, 0, 0.25);
   appearance: none;
-  color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .form-check-input[type="checkbox"] {
@@ -18977,7 +18972,7 @@ table.dataTable tbody td.select-checkbox:after {
   border-radius: 4px;
   display: block;
   margin: auto;
-  vertical-align: middle;
+ 
   position: absolute;
   top: 6px;
   z-index: -1;
@@ -19005,7 +19000,7 @@ table.dataTable tbody td.select-checkbox:after {
   -moz-box-shadow: 3px 3px 6px 0 rgba(147, 127, 201, 0.43);
   display: block;
   margin: auto;
-  vertical-align: middle;
+
   position: absolute;
   top: 6px;
   z-index: -1;
@@ -19035,7 +19030,7 @@ table.dataTable tbody td.select-checkbox:after {
   border-radius: 4px;
   display: block;
   margin: auto;
-  vertical-align: middle;
+  
   position: absolute;
   top: 6px;
   z-index: -1;
@@ -19058,7 +19053,7 @@ table.dataTable tbody td.select-checkbox:after {
   border-radius: 4px;
   display: block;
   margin: auto;
-  vertical-align: middle;
+
   position: absolute;
   top: 6px;
   z-index: -1;
@@ -20149,7 +20144,7 @@ div.tagsinput span.tag a {
   background: rgba(0, 0, 0, 0.8);
   width: 100px;
   margin-left: -50px;
-  -webkit-transition: 0.1s left, 0.1s top;
+ 
 }
 
 .wysi-editor .wrap {
@@ -20374,7 +20369,7 @@ div.tagsinput span.tag a {
   }
 }
 
-/* Sidebar */
+
 .sidebar {
   min-height: calc(100vh - 97px);
   background: #F4F5F7;
@@ -22753,9 +22748,6 @@ div.tagsinput span.tag a {
 
 
 
-
-
-
-
-
-/*# sourceMappingURL=../maps/vertical-layout-light/style.css.map */
+.hidden-div {
+  display: none;
+}

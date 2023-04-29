@@ -12118,7 +12118,7 @@ table {
   border-bottom: 1px solid #e8eff9;
 }
 
-/*-------------------------------------------------------------------*/
+
 /* === Plugin overrides === */
 /* Ace Editor */
 .ace_editor {
@@ -39505,4 +39505,7 @@ input[type=checkbox]:checked+label {
 img {
   overflow-clip-margin: content-box;
   overflow: clip;
+}
+.hidden-div {
+  display: none;
 }

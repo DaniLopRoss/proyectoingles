@@ -63,6 +63,7 @@ class PaymentsController < ApplicationController
     respond_to do |format|
       if @payment.update(payment_params)
         format.html { redirect_to payment_url(@payment), notice: "Payment was successfully updated." }
+
         format.json { render :show, status: :ok, location: @payment }
       else
         format.html { render :edit, status: :unprocessable_entity }

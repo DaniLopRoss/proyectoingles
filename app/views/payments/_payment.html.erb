@@ -1,4 +1,5 @@
 <div id="<%= dom_id payment %>">
+
   <p>
     <strong>Nombre:</strong>
     <%= payment.documento.nombre %>
@@ -30,19 +31,25 @@
           </div>
 
           <div id="document-info" style="display: none;">
-            <div class="alert alert-success">
+            <div class="alert alert-success" style="width: 75rem">
               <p>Subido por inglés <i class="bi bi-check-circle-fill me-2"></i></p>
-              <p>Subido por el usuario: <%= payment.documento.user.nombre %></p>
+              <p>Subido por el usuario: <%= payment.documento.user.nombre if payment.documento.user %></p>
+
               <p>Fecha de subida: <%= payment.documento.created_at %></p>
              
                 <p class="payment-info">Estatus de pago: <%= payment.status %></p>
-                <p class="payment-info">validado por <%= payment.user.nombre %></p>
+                <p class="payment-info">validado por <%= payment.user.nombre if payment.user.present? %></p>
+                <p>MD5: <%= payment.documento.md5 %></p>
               
 
             </div>
           </div>
           <p>
           </p>
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+          <% end %>
+          
 </div>
 
 <script>

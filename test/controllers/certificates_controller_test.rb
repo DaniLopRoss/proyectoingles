@@ -1,8 +1,15 @@
 require "test_helper"
 
 class CertificatesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+  fixtures :payments
+  fixtures :certificates
+  fixtures :users
   setup do
     @certificate = certificates(:one)
+    @payment = payments(:one)
+    @user = users(:one)
+    sign_in users(:one)
   end
 
   test "should get index" do
@@ -11,13 +18,13 @@ class CertificatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    get new_certificate_url
+    get new_certificate_url(payment_id: @payment.id)
     assert_response :success
   end
 
   test "should create certificate" do
-    assert_difference("Certificate.count") do
-      post certificates_url, params: { certificate: {  } }
+    assert_difference('Certificate.count') do
+      post certificates_url,  params: { certificate: {payment_id: @payment.id, nombre: "CLE_0002202318160424.pdf",status: 1, user_id: @user.id, uploads: [fixture_file_upload(Rails.root.join('test', 'fixtures', 'files', 'CLE_0002202318160424.pdf'), 'application/pdf')] } }
     end
 
     assert_redirected_to certificate_url(Certificate.last)
@@ -34,8 +41,10 @@ class CertificatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update certificate" do
-    patch certificate_url(@certificate), params: { certificate: {  } }
+    patch certificate_url(@certificate), params: { certificate: {payment_id: @payment.id, nombre: "CLE_0002202318160424.pdf",status: 1, user_id: @user.id}}
     assert_redirected_to certificate_url(@certificate)
+    @certificate.reload
+    assert_equal "CLE_0002202318160424.pdf", @certificate.nombre
   end
 
   test "should destroy certificate" do

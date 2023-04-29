@@ -1,29 +1,23 @@
-
-
 <%= form_with(model: documento) do |form| %>
   <% if documento.errors.any? %>
     <div style="color: blue">
-      
-
-      <ul>
-        <% documento.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <div id="error_explanation">
+    <ul>
+      <% documento.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
-
-
    
   <div class="form-group row">
-    <%= form.label :uploads,"Subir documento" ,class:'col-sm-2'%>
+    <%= form.label :uploads, "Subir documento", class: "col-sm-2" %>
     <div class="col-sm-4">
-    <%= form.file_field :uploads, multiple: true, class: "form-control" %>
-  </div>
+      <%= form.file_field :uploads, multiple: true, class: "form-control" %>
+    </div>
   </div>
 
-  
- 
-    <button class="btn btn-info" <%= form.submit %> Guardar </button>
+  <div class="form-group">
+    <%= form.submit "Guardar", class: "btn btn-info" %>
   </div>
 <% end %>
