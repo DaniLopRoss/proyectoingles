@@ -62,7 +62,7 @@ class PaymentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update payment" do
-    patch payment_url(@payment), params: { payment: { documento_id: @documento.id, nombre: "COMPROBANTE_REFERENCIA_PAGO_10000 (1).pdf",status:"PAGADO", user_id: @user.id } }
+    patch payment_url(@payment), params: { payment: { documento_id: @documento.id, nombre: "COMPROBANTE_REFERENCIA_PAGO_10000 (1).pdf",status:"PAGADO", user_id: @user.id, uploads: [fixture_file_upload(Rails.root.join('test', 'fixtures', 'files', 'COMPROBANTE_REFERENCIA_PAGO_10000.pdf'), 'application/pdf')] } }
     assert_redirected_to payment_url(@payment)
     @payment.reload
     assert_equal "PAGADO", @payment.status
